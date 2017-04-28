@@ -1,2 +1,2 @@
 # java.fundamentals
-a repository for java fundamentals tasks
+age repository for java fundamentals tasks
