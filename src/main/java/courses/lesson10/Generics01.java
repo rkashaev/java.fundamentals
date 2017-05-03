@@ -10,6 +10,7 @@ public class Generics01 {
         System.out.println(o2.getClass());
         System.out.println(o3.getClass());
 
+        System.out.println(o3.<Double>castToE(10.0f));
     }
 }
 
@@ -25,5 +26,11 @@ class Opt<T> {
 
     public void setValue(T value) {
         this.value = value;
+    }
+
+    public <E extends Number> E castToE(E value) {
+        //
+        System.out.println(value.getClass());
+        return (value);
     }
 }
