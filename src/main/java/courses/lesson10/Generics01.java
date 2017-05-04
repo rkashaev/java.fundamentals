@@ -11,6 +11,7 @@ public class Generics01 {
         System.out.println(o3.getClass());
 
         System.out.println(o3.<Double>castToE(10.0f));
+
     }
 }
 

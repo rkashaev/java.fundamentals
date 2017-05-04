@@ -44,6 +44,20 @@ public class Comparators {
 
         printArray(employees);
 
+
+        System.out.println();
+        System.out.println("  by year: ");
+
+        Arrays.sort(employees, new Comparator<Employee>() {
+            @Override
+            public int compare(Employee o1, Employee o2) {
+                return o1.getYear() - o2.getYear();
+            }
+        });
+
+        printArray(employees);
+
+
     }
 
     private static Employee[] generateEmployees() {
