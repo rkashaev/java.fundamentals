@@ -11,7 +11,7 @@ public class ImplicitParameter {
         st = s;
     }
 
-    public String getSt(ImplicitParameter this) {
+    public String getSt(/*ImplicitParameter this*/) {
 
         return st;
     }
