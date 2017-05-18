@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.URISyntaxException;
 
 public class FileReaderExample {
-    public static void main(String[] args) throws URISyntaxException {
+    public static void main(String[] args) {
 //        File file = new File(cls.getResource("wiki.html").toURI());
 
         try (BufferedReader br = new BufferedReader(getResource("wiki.html"))) {
