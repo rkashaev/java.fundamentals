@@ -3,6 +3,7 @@ package courses.lesson13;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,7 +16,7 @@ public class Resources {
     }
 
     private static void printFile(URL resource) throws IOException, URISyntaxException {
-        Files.lines(giveMePleaseAFile(resource)).forEach(System.out::println);
+        Files.readAllLines(giveMePleaseAFile(resource), Charset.forName("cp1251")).forEach(System.out::println);
     }
 
     private static Path giveMePleaseAFile(URL resource) throws URISyntaxException {
