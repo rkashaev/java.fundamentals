@@ -27,6 +27,6 @@ public class Brackets {
                 }
             }
         }
-        return true;
+        return st.isEmpty();
     }
 }

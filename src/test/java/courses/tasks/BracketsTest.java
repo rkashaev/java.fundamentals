@@ -22,6 +22,7 @@ public class BracketsTest {
         assertEquals(false, Brackets.check("[(]"));
         assertEquals(false, Brackets.check("[(}]"));
         assertEquals(false, Brackets.check("[)"));
+        assertEquals(false, Brackets.check("["));
         assertEquals(false, Brackets.check("[)]"));
         assertEquals(false, Brackets.check("}{"));
         assertEquals(false, Brackets.check(")("));
