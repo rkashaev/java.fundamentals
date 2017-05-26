@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class CaesarCrypt {
     private final static int DEFAULT_OFFSET = 3;
@@ -25,6 +27,10 @@ public class CaesarCrypt {
         if ("-d".equals(args[0])) {
             offset *= -1;
             t++;
+            if (args.length < 3) {
+                usage();
+                return;
+            }
         }
 
         File inputFile = new File(args[t++]);
@@ -41,7 +47,7 @@ public class CaesarCrypt {
         if (!inputFile.canRead()) {
             throw new IllegalArgumentException("Can't read file " + inputFile);
         }
-        if (!outputFile.canWrite()) {
+        if (outputFile.exists() && !outputFile.canWrite()) {
             throw new IllegalArgumentException("Can't write file " + outputFile);
         }
     }
@@ -59,6 +65,7 @@ public class CaesarCrypt {
 
     /**
      * Provides simple Caesar encryptors
+     *
      * @param string a string to encrypt
      * @param offset offset for Caesar algorithm
      * @return Caesar-cipher encrypted string
