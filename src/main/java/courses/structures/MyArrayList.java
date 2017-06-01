@@ -1,5 +1,7 @@
 package courses.structures;
 
+import static courses.structures.ArrUtils.enlarge;
+
 public class MyArrayList<E> implements List<E> {
     Object[] arr;
     int size;
@@ -24,17 +26,9 @@ public class MyArrayList<E> implements List<E> {
     @Override
     public void add(E element) {
         if (arr.length == size) {
-            enlarge();
+            arr = enlarge(arr, (arr.length * 3) / 2);
         }
         arr[size++] = element;
-    }
-
-    private void enlarge() {
-        // out of memory checks are skipped
-        int newSize = (arr.length * 3) / 2;
-        Object[] newArr = new Object[newSize];
-        System.arraycopy(arr, 0, newArr, 0, arr.length);
-        arr = newArr;
     }
 
     @Override

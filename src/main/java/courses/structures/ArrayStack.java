@@ -2,6 +2,8 @@ package courses.structures;
 
 import java.util.EmptyStackException;
 
+import static courses.structures.ArrUtils.enlarge;
+
 public class ArrayStack<E> implements Stack<E> {
     Object[] arr;
     int top = 0;
@@ -22,7 +24,7 @@ public class ArrayStack<E> implements Stack<E> {
     @Override
     public void push(E obj) {
         if (top == arr.length) {
-            enlarge();
+            arr = enlarge(arr, (arr.length * 3) / 2);
         }
         arr[top++] = obj;
     }
@@ -38,11 +40,4 @@ public class ArrayStack<E> implements Stack<E> {
         return e;
     }
 
-    private void enlarge() {
-        // out of memory checks are skipped
-        int newSize = (arr.length * 3) / 2;
-        Object[] newArr = new Object[newSize];
-        System.arraycopy(arr, 0, newArr, 0, arr.length);
-        arr = newArr;
-    }
 }

@@ -1,7 +1,5 @@
 package courses.tasks;
 
-import java.util.Arrays;
-
 public class ArrayUtils {
 
     static int binarySearch(int el, int[] arr) {
