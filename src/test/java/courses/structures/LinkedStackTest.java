@@ -3,10 +3,12 @@ package courses.structures;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EmptyStackException;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -66,4 +68,19 @@ public class LinkedStackTest {
         as.pop();
     }
 
+    @Test()
+    public void testIterator() throws Exception {
+        as.push(10);
+        as.push(11);
+        as.push(12);
+        as.push(13);
+        as.push(14);
+
+        java.util.List<Integer> expected = Arrays.asList(14, 13, 12, 11, 10);
+        java.util.List<Integer> actual = new ArrayList<>();
+        for (Integer item : as) {
+            actual.add(item);
+        }
+        assertThat(actual, equalTo(expected));
+    }
 }

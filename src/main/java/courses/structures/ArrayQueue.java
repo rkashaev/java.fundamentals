@@ -2,8 +2,9 @@ package courses.structures;
 
 
 import java.util.EmptyStackException;
+import java.util.Iterator;
 
-public class ArrayQueue<E> implements Queue<E> {
+public class ArrayQueue<E> implements Queue<E>, Iterable<E> {
     Object[] arr;
     int size = 0;
     int head = 0;
@@ -42,6 +43,25 @@ public class ArrayQueue<E> implements Queue<E> {
     @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+            int cur = head;
+            int covered = 0;
+
+            @Override
+            public boolean hasNext() {
+                return covered < size();
+            }
+
+            @Override
+            public E next() {
+                covered++;
+                return (E) arr[cur++ % arr.length];
+            }
+        };
     }
 
     private void enlarge() {

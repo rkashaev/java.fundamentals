@@ -1,8 +1,9 @@
 package courses.structures;
 
 import java.util.EmptyStackException;
+import java.util.Iterator;
 
-public class LinkedStack<E> implements Stack<E> {
+public class LinkedStack<E> implements Stack<E>, Iterable<E> {
     Entry<E> top = null;
     int size = 0;
 
@@ -31,12 +32,37 @@ public class LinkedStack<E> implements Stack<E> {
         return tmp.data;
     }
 
+    @Override
+    public Iterator<E> iterator() {
+        return new LinkedStackIterator<>();
+    }
+
     static class Entry<E> {
         E data;
         Entry<E> next = null;
 
-        public Entry(E data) {
+        Entry(E data) {
             this.data = data;
+        }
+    }
+
+    class LinkedStackIterator<T> implements Iterator<T> {
+        Entry cur = null;
+
+        LinkedStackIterator() {
+            cur = top;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return (cur != null);
+        }
+
+        @Override
+        public T next() {
+            T data = (T) cur.data;
+            cur = cur.next;
+            return data;
         }
     }
 }

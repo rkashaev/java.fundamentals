@@ -2,6 +2,9 @@ package courses.structures;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
@@ -115,5 +118,30 @@ public class ArrayQueueTest {
         assertThat(queue.size(), is(greaterThan(5)));
 
         assertArrayEquals(new Integer[]{3, 4, 5, 6, 7, 8, 9, null, null, null}, queue.arr);
+    }
+
+
+    @Test()
+    public void testIterator() throws Exception {
+        ArrayQueue<Integer> queue = new ArrayQueue<>(5);
+
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+
+        queue.dequeue();
+        queue.dequeue();
+
+        queue.enqueue(4);
+        queue.enqueue(5);
+        queue.enqueue(6);
+        queue.enqueue(7);
+
+        java.util.List<Integer> expected = Arrays.asList(3, 4, 5, 6, 7);
+        java.util.List<Integer> actual = new ArrayList<>();
+        for (Integer item : queue) {
+            actual.add(item);
+        }
+        assertThat(actual, equalTo(expected));
     }
 }
