@@ -64,6 +64,72 @@ public class SortingAlgorithmsTest {
         testSortingMethodReversed(new Shell(), COUNT, ARRAY_SIZE);
     }
 
+    @Test
+    public void testRandomMergeSort() throws Exception {
+        testSortingMethodRandom(new Merge(), COUNT, ARRAY_SIZE);
+    }
+
+    @Test
+    public void testOrderedMergeSort() throws Exception {
+        testSortingMethodOrdered(new Merge(), COUNT, ARRAY_SIZE);
+    }
+
+    @Test
+    public void testReversedMergeSort() throws Exception {
+        testSortingMethodReversed(new Merge(), COUNT, ARRAY_SIZE);
+    }
+
+    @Test
+    public void testMergeMethodSimple() throws Exception {
+        Merge ma = new Merge();
+
+        int[] arrBig = {1, 2, 2, 5};
+        int[] tmp = new int[arrBig.length];
+
+
+        int mid = (arrBig.length) / 2;
+        ma.merge(arrBig, tmp, 0, mid, arrBig.length - 1);
+
+        assertTrue(isSorted(arrBig));
+
+        arrBig = new int[]{1, 2, 2, 5, 10};
+        tmp = new int[arrBig.length];
+
+        mid = arrBig.length / 2;
+        ma.merge(arrBig, tmp, 0, mid, arrBig.length - 1);
+
+        assertTrue(isSorted(arrBig));
+    }
+
+
+    @Test
+    public void testMergeMethod() throws Exception {
+        Merge ma = new Merge();
+
+        int[] arr1 = fillRandomArray(10);
+        int[] arr2 = fillRandomArray(10);
+
+        Arrays.sort(arr1);
+        Arrays.sort(arr2);
+
+        int[] arrBig = new int[arr1.length + arr2.length];
+        System.arraycopy(arr1, 0, arrBig, 0, arr1.length);
+        System.arraycopy(arr2, 0, arrBig, arr1.length, arr2.length);
+
+        System.out.println(Arrays.toString(arr1));
+        System.out.println(Arrays.toString(arr2));
+        System.out.println(Arrays.toString(arrBig));
+
+        int[] tmp = new int[arrBig.length];
+
+        int mid = arr1.length - 1;
+        ma.merge(arrBig, tmp, 0, mid, arrBig.length - 1);
+
+        System.out.println(Arrays.toString(arrBig));
+
+        assertTrue(isSorted(arrBig));
+    }
+
 
     private void testSortingMethodRandom(AbstractSortingAlgorithm sa, int times, int size) {
         long t;
@@ -140,7 +206,7 @@ public class SortingAlgorithmsTest {
     private int[] fillRandomArray(int size) {
         final int[] res = new int[size];
         for (int i = 0; i < res.length; i++) {
-            res[i] = rnd.nextInt();
+            res[i] = rnd.nextInt(10);
         }
         return res;
     }
