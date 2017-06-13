@@ -19,12 +19,108 @@ public class SortingAlgorithmsTest {
 
     @Test
     public void testRandomSelectionSort() throws Exception {
-        testSortingMethodTimes(new Selection(), COUNT);
+        testSortingMethodRandom(new Selection(), COUNT, 1000);
+    }
+
+    @Test
+    public void testOrderedSelectionSort() throws Exception {
+        testSortingMethodOrdered(new Selection(), COUNT, 1000);
+    }
+
+    @Test
+    public void testReversedSelectionSort() throws Exception {
+        testSortingMethodReversed(new Selection(), COUNT, 1000);
     }
 
     @Test
     public void testRandomInsertionSort() throws Exception {
-        testSortingMethodTimes(new Insertion(), COUNT);
+        testSortingMethodRandom(new Insertion(), COUNT, 1000);
+    }
+
+    @Test
+    public void testOrderedInsertionSort() throws Exception {
+        testSortingMethodOrdered(new Insertion(), COUNT, 1000);
+    }
+
+    @Test
+    public void testReversedInsertionSort() throws Exception {
+        testSortingMethodReversed(new Insertion(), COUNT, 1000);
+    }
+
+    private void testSortingMethodRandom(AbstractSortingAlgorithm sa, int times, int size) {
+        long t;
+        long totalTime = 0;
+        for (int i = 0; i < times; i++) {
+
+            final int[] arr = fillRandomArray(size);
+            final int[] sorted = copySorted(arr);
+
+            t = System.currentTimeMillis();
+            sa.sort(arr);
+            totalTime += System.currentTimeMillis() - t;
+
+            assertArrayEquals(sorted, arr);
+        }
+        System.out.printf("%d times of sorting %d random integers by %s sort took %d ms\n",
+                times,
+                size,
+                sa.getClass().getSimpleName(),
+                totalTime);
+    }
+
+    private void testSortingMethodOrdered(AbstractSortingAlgorithm sa, int times, int size) {
+        long t;
+        long totalTime = 0;
+        for (int i = 0; i < times; i++) {
+
+            final int[] arr = fillOrderedArray(size, false);
+            final int[] sorted = Arrays.copyOf(arr, arr.length);
+
+            t = System.currentTimeMillis();
+            sa.sort(arr);
+            totalTime += System.currentTimeMillis() - t;
+
+            assertArrayEquals(sorted, arr);
+        }
+        System.out.printf("%d times of sorting %d ordered integers by %s sort took %d ms\n",
+                times,
+                size,
+                sa.getClass().getSimpleName(),
+                totalTime);
+    }
+
+    private void testSortingMethodReversed(AbstractSortingAlgorithm sa, int times, int size) {
+        long t;
+        long totalTime = 0;
+        for (int i = 0; i < times; i++) {
+
+            final int[] arr = fillOrderedArray(size, true);
+            final int[] sorted = copySorted(arr);
+
+            t = System.currentTimeMillis();
+            sa.sort(arr);
+            totalTime += System.currentTimeMillis() - t;
+
+            assertArrayEquals(sorted, arr);
+        }
+        System.out.printf("%d times of sorting %d reverse ordered integers by %s sort took %d ms\n",
+                times,
+                size,
+                sa.getClass().getSimpleName(),
+                totalTime);
+    }
+
+    private int[] fillOrderedArray(int size, boolean reversed) {
+        final int[] res = new int[size];
+        final int spot =  size + rnd.nextInt(10_000);
+        for (int i = 0; i < res.length; i++) {
+            if (reversed) {
+                res[i] = spot - i;
+            } else {
+                res[i] = spot + i;
+            }
+        }
+        return res;
     }
 
     private int[] fillRandomArray(int size) {
@@ -33,18 +129,6 @@ public class SortingAlgorithmsTest {
             res[i] = rnd.nextInt();
         }
         return res;
-    }
-
-    private void testSortingMethodTimes(AbstractSortingAlgorithm sa, int cnt) {
-        for (int i = 0; i < cnt; i++) {
-
-            final int[] arr = fillRandomArray(1000);
-            final int[] sorted = copySorted(arr);
-
-            sa.sort(arr);
-
-            assertArrayEquals(sorted, arr);
-        }
     }
 
     private int[] copySorted(int[] arr) {
