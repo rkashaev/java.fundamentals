@@ -58,6 +58,17 @@ public abstract class AbstractSortingAlgorithm {
         return true;
     }
 
+    public static boolean isSorted(int[] a) {
+        return isSorted(a, 0, a.length);
+    }
+
+    // is the array a[lo..hi) sorted
+    public static boolean isSorted(int[] a, int lo, int hi) {
+        for (int i = lo + 1; i < hi; i++)
+            if (less(a[i], a[i - 1])) return false;
+        return true;
+    }
+
     public static boolean isSorted(Object[] a, Comparator comparator) {
         return isSorted(a, 0, a.length, comparator);
     }

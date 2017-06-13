@@ -6,10 +6,12 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.Random;
 
-import static org.junit.Assert.assertArrayEquals;
+import static courses.sorting.AbstractSortingAlgorithm.isSorted;
+import static org.junit.Assert.assertTrue;
 
 public class SortingAlgorithmsTest {
-    private static final int COUNT = 100;
+    private static final int COUNT = 10;
+    public static final int ARRAY_SIZE = 10_000;
     private Random rnd;
 
     @Before
@@ -19,47 +21,61 @@ public class SortingAlgorithmsTest {
 
     @Test
     public void testRandomSelectionSort() throws Exception {
-        testSortingMethodRandom(new Selection(), COUNT, 1000);
+        testSortingMethodRandom(new Selection(), COUNT, ARRAY_SIZE);
     }
 
     @Test
     public void testOrderedSelectionSort() throws Exception {
-        testSortingMethodOrdered(new Selection(), COUNT, 1000);
+        testSortingMethodOrdered(new Selection(), COUNT, ARRAY_SIZE);
     }
 
     @Test
     public void testReversedSelectionSort() throws Exception {
-        testSortingMethodReversed(new Selection(), COUNT, 1000);
+        testSortingMethodReversed(new Selection(), COUNT, ARRAY_SIZE);
     }
 
     @Test
     public void testRandomInsertionSort() throws Exception {
-        testSortingMethodRandom(new Insertion(), COUNT, 1000);
+        testSortingMethodRandom(new Insertion(), COUNT, ARRAY_SIZE);
     }
 
     @Test
     public void testOrderedInsertionSort() throws Exception {
-        testSortingMethodOrdered(new Insertion(), COUNT, 1000);
+        testSortingMethodOrdered(new Insertion(), COUNT, ARRAY_SIZE);
     }
 
     @Test
     public void testReversedInsertionSort() throws Exception {
-        testSortingMethodReversed(new Insertion(), COUNT, 1000);
+        testSortingMethodReversed(new Insertion(), COUNT, ARRAY_SIZE);
     }
+
+    @Test
+    public void testRandomShellSort() throws Exception {
+        testSortingMethodRandom(new Shell(), COUNT, ARRAY_SIZE);
+    }
+
+    @Test
+    public void testOrderedShellSort() throws Exception {
+        testSortingMethodOrdered(new Shell(), COUNT, ARRAY_SIZE);
+    }
+
+    @Test
+    public void testReversedShellSort() throws Exception {
+        testSortingMethodReversed(new Shell(), COUNT, ARRAY_SIZE);
+    }
+
 
     private void testSortingMethodRandom(AbstractSortingAlgorithm sa, int times, int size) {
         long t;
         long totalTime = 0;
         for (int i = 0; i < times; i++) {
-
             final int[] arr = fillRandomArray(size);
-            final int[] sorted = copySorted(arr);
 
             t = System.currentTimeMillis();
             sa.sort(arr);
             totalTime += System.currentTimeMillis() - t;
 
-            assertArrayEquals(sorted, arr);
+            assertTrue(isSorted(arr));
         }
         System.out.printf("%d times of sorting %d random integers by %s sort took %d ms\n",
                 times,
@@ -74,13 +90,12 @@ public class SortingAlgorithmsTest {
         for (int i = 0; i < times; i++) {
 
             final int[] arr = fillOrderedArray(size, false);
-            final int[] sorted = Arrays.copyOf(arr, arr.length);
 
             t = System.currentTimeMillis();
             sa.sort(arr);
             totalTime += System.currentTimeMillis() - t;
 
-            assertArrayEquals(sorted, arr);
+            assertTrue(isSorted(arr));
         }
         System.out.printf("%d times of sorting %d ordered integers by %s sort took %d ms\n",
                 times,
@@ -95,13 +110,12 @@ public class SortingAlgorithmsTest {
         for (int i = 0; i < times; i++) {
 
             final int[] arr = fillOrderedArray(size, true);
-            final int[] sorted = copySorted(arr);
 
             t = System.currentTimeMillis();
             sa.sort(arr);
             totalTime += System.currentTimeMillis() - t;
 
-            assertArrayEquals(sorted, arr);
+            assertTrue(isSorted(arr));
         }
         System.out.printf("%d times of sorting %d reverse ordered integers by %s sort took %d ms\n",
                 times,
@@ -112,7 +126,7 @@ public class SortingAlgorithmsTest {
 
     private int[] fillOrderedArray(int size, boolean reversed) {
         final int[] res = new int[size];
-        final int spot =  size + rnd.nextInt(10_000);
+        final int spot = size + rnd.nextInt(10_000);
         for (int i = 0; i < res.length; i++) {
             if (reversed) {
                 res[i] = spot - i;
