@@ -1,6 +1,7 @@
 package courses.sorting;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 public class SortingAlgorithmsTest {
     private static final int COUNT = 10;
-    public static final int ARRAY_SIZE = 10_000;
+    public static final int ARRAY_SIZE = 100_000;
     private Random rnd;
 
     @Before
@@ -20,16 +21,19 @@ public class SortingAlgorithmsTest {
     }
 
     @Test
+    @Ignore
     public void testRandomSelectionSort() throws Exception {
         testSortingMethodRandom(new Selection(), COUNT, ARRAY_SIZE);
     }
 
     @Test
+    @Ignore
     public void testOrderedSelectionSort() throws Exception {
         testSortingMethodOrdered(new Selection(), COUNT, ARRAY_SIZE);
     }
 
     @Test
+    @Ignore
     public void testReversedSelectionSort() throws Exception {
         testSortingMethodReversed(new Selection(), COUNT, ARRAY_SIZE);
     }
@@ -70,16 +74,19 @@ public class SortingAlgorithmsTest {
     }
 
     @Test
+    @Ignore
     public void testOrderedMergeSort() throws Exception {
         testSortingMethodOrdered(new Merge(), COUNT, ARRAY_SIZE);
     }
 
     @Test
+    @Ignore
     public void testReversedMergeSort() throws Exception {
         testSortingMethodReversed(new Merge(), COUNT, ARRAY_SIZE);
     }
 
     @Test
+    @Ignore
     public void testMergeMethodSimple() throws Exception {
         Merge ma = new Merge();
 
@@ -116,16 +123,10 @@ public class SortingAlgorithmsTest {
         System.arraycopy(arr1, 0, arrBig, 0, arr1.length);
         System.arraycopy(arr2, 0, arrBig, arr1.length, arr2.length);
 
-        System.out.println(Arrays.toString(arr1));
-        System.out.println(Arrays.toString(arr2));
-        System.out.println(Arrays.toString(arrBig));
-
         int[] tmp = new int[arrBig.length];
 
         int mid = arr1.length - 1;
         ma.merge(arrBig, tmp, 0, mid, arrBig.length - 1);
-
-        System.out.println(Arrays.toString(arrBig));
 
         assertTrue(isSorted(arrBig));
     }
@@ -134,6 +135,9 @@ public class SortingAlgorithmsTest {
     private void testSortingMethodRandom(AbstractSortingAlgorithm sa, int times, int size) {
         long t;
         long totalTime = 0;
+
+        warmup(sa, times, size);
+
         for (int i = 0; i < times; i++) {
             final int[] arr = fillRandomArray(size);
 
@@ -153,6 +157,9 @@ public class SortingAlgorithmsTest {
     private void testSortingMethodOrdered(AbstractSortingAlgorithm sa, int times, int size) {
         long t;
         long totalTime = 0;
+
+        warmup(sa, times, size);
+
         for (int i = 0; i < times; i++) {
 
             final int[] arr = fillOrderedArray(size, false);
@@ -173,6 +180,9 @@ public class SortingAlgorithmsTest {
     private void testSortingMethodReversed(AbstractSortingAlgorithm sa, int times, int size) {
         long t;
         long totalTime = 0;
+
+        warmup(sa, times, size);
+
         for (int i = 0; i < times; i++) {
 
             final int[] arr = fillOrderedArray(size, true);
@@ -188,6 +198,13 @@ public class SortingAlgorithmsTest {
                 size,
                 sa.getClass().getSimpleName(),
                 totalTime);
+    }
+
+    private void warmup(AbstractSortingAlgorithm sa, int times, int size) {
+        for (int i = 0; i < times; i++) {
+            final int[] arr = fillRandomArray(size);
+            sa.sort(arr);
+        }
     }
 
     private int[] fillOrderedArray(int size, boolean reversed) {
