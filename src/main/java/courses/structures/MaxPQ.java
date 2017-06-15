@@ -52,24 +52,33 @@ public class MaxPQ<K extends Comparable<K>> {
     }
 
     void swim(int k) {
+        // while k is not a root... and k bigger than it's parent
         while (k > 1 && less(k / 2, k)) {
+            // exchange with parent
             exch(k, k / 2);
+            // now go to parent...
             k = k / 2;
         }
     }
 
     void sink(int k) {
+        // k - index of the element to sink
         while (2 * k <= n) {
+            // find the first children of element with index k
             int j = 2 * k;
+            // if the first children less than the second, get the second
             if (j < n && less(j, j + 1)) j++;
+            // if the k-th element more than it's child, everything seems ok, stop sinking
             if (!less(k, j)) break;
+            // else exchange it with k
             exch(k, j);
+            // select the child and keep sinking
             k = j;
         }
     }
 
     private boolean less(int i, int j) {
-        return ((Comparable<K>) arr[i]).compareTo((K) arr[j]) < 0;
+        return ((K) arr[i]).compareTo((K) arr[j]) < 0;
     }
 
     private void exch(int i, int j) {
