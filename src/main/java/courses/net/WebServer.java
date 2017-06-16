@@ -1,20 +1,19 @@
 package courses.net;
 
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
 
 
 public class WebServer {
 
     public static void main(String[] args) throws Throwable {
-        ServerSocket ss = new ServerSocket(8080);
+        final int port = 8080;
+        ServerSocket ss = new ServerSocket(port);
+        System.out.println("Server is started. Listening to port " + port);
         while (true) {
             Socket s = ss.accept();
-            System.err.println("Client accepted");
+            System.out.println("Client accepted");
             new Thread(new SocketProcessor(s)).start();
         }
     }
@@ -36,13 +35,8 @@ public class WebServer {
                 readInputHeaders();
                 writeResponse("<html><body><h1>Hello from Epam!</h1></body></html>");
             } catch (Throwable t) {
-                /*do nothing*/
             } finally {
-                try {
-                    s.close();
-                } catch (Throwable t) {
-                    /*do nothing*/
-                }
+                quietClose(s);
             }
             System.err.println("Client processing finished");
         }
@@ -60,11 +54,20 @@ public class WebServer {
 
         private void readInputHeaders() throws Throwable {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            System.out.println("Request headers:");
             while (true) {
                 String s = br.readLine();
+                System.out.println(s);
                 if (s == null || s.trim().length() == 0) {
                     break;
                 }
+            }
+        }
+
+        private void quietClose(Closeable s) {
+            try {
+                s.close();
+            } catch (Throwable t) {
             }
         }
     }

@@ -37,10 +37,10 @@ public class Networking {
         URL url = new URL("http://" + urlStr);
         URLConnection urlConnection = url.openConnection();
 
-        InputStream is = urlConnection.getInputStream();
-        printFromInputStream(is);
+        try (InputStream is = urlConnection.getInputStream()) {
 
-        is.close();
+            printFromInputStream(is);
+        }
     }
 
     private static void printFromInputStream(InputStream is) throws IOException {
@@ -49,6 +49,5 @@ public class Networking {
         while (sc.hasNext()) {
             System.out.println(sc.nextLine());
         }
-        sc.close();
     }
 }
