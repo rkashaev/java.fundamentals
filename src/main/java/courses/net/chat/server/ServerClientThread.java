@@ -1,6 +1,6 @@
 package courses.net.chat.server;
 
-import net.Message;
+import courses.net.chat.net.Message;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

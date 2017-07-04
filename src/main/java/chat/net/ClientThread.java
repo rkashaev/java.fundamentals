@@ -1,7 +1,7 @@
 package chat.net;
 
-import rk.epam.chat.client.ChatForm;
-import rk.epam.chat.server.Server;
+import chat.client.ChatForm;
+import chat.server.Server;
 
 import java.io.*;
 import java.net.Socket;

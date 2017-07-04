@@ -1,7 +1,7 @@
 package chat.client;
 
-import rk.epam.chat.net.ClientThread;
-import rk.epam.chat.server.Server;
+import chat.net.ClientThread;
+import chat.server.Server;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;

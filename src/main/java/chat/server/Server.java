@@ -1,6 +1,6 @@
 package chat.server;
 
-import rk.epam.chat.net.ClientThread;
+import chat.net.ClientThread;
 
 import java.io.IOException;
 import java.net.InetAddress;
